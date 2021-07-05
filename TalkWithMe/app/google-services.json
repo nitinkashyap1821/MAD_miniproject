@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "228769221709",
+    "project_id": "talkwithme-7724d",
+    "storage_bucket": "talkwithme-7724d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228769221709:android:d627fbe875ff9bbcb4a004",
+        "android_client_info": {
+          "package_name": "com.example.talkwithme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228769221709-3fqtqljit4fnbnmhj25gfbg8ttb409d4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOAOMpVR156NYdI42nE3nTKRd6zCIBar4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228769221709-3fqtqljit4fnbnmhj25gfbg8ttb409d4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
