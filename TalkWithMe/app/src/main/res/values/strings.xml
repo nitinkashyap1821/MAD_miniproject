@@ -7,4 +7,6 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="back_to_registration">Back to registration</string>
+    <string name="insert_image">Insert Image</string>
+
 </resources>

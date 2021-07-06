@@ -35,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin() {
+        if (email.text.isEmpty() || password.text.isEmpty()) {
+            Toast.makeText(this, "Fill the above details", Toast.LENGTH_SHORT).show()
+            return
+        }
         FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(email.text.toString(), password.text.toString())
             .addOnCompleteListener {
