@@ -4,19 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.talkwithme_NotWoking.HomeActivity">
+    tools:context=".NewContactActivity">
 
-
-    <ImageButton
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:textAlignment="center"
-        android:tooltipText="hi there"
-        android:background="@color/black"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUserList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/user_rows_new_contact" />
 </androidx.constraintlayout.widget.ConstraintLayout>

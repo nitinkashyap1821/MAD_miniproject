@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             .signInWithEmailAndPassword(email.text.toString(), password.text.toString())
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, LatestMessageActivity::class.java)
                 startActivity(intent)
                 Log.d("Main", "uid = ${it.result?.user?.uid}")
             }

@@ -8,5 +8,7 @@
     <string name="login">Login</string>
     <string name="back_to_registration">Back to registration</string>
     <string name="insert_image">Insert Image</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="dummy">dummy</string>
 
 </resources>

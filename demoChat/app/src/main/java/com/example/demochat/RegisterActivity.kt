@@ -98,7 +98,6 @@ class RegisterActivity : AppCompatActivity() {
         refStorage.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 Log.d(tag, "image uploaded")
-                Toast.makeText(this, "image uploaded", Toast.LENGTH_SHORT).show()
 
                 refStorage.downloadUrl
                     .addOnSuccessListener {
@@ -121,6 +120,12 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(tag, "uploaded to DB")
+                val intent = Intent(this,LatestMessageActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+            .addOnFailureListener{
+                Log.d(tag, "${it.message}")
             }
     }
 
