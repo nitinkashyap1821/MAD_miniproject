@@ -47,6 +47,11 @@ dependencies {
     //image caching and downloading
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //Groupie, flexible library for complex RecyclerView layouts.
+    implementation "com.xwray:groupie:2.9.0"
+    implementation "com.xwray:groupie-kotlin-android-extensions:2.9.0"
+    implementation 'com.xwray:groupie-databinding:2.9.0'
+
     //fireBase
     implementation platform('com.google.firebase:firebase-bom:28.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
