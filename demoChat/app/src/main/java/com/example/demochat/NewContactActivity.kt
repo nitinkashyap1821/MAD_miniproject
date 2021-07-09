@@ -25,10 +25,6 @@ class NewContactActivity : AppCompatActivity() {
         supportActionBar?.title = "Select User"
         recyclerView = findViewById(R.id.recyclerViewUserList)
 
-        val adapter = GroupAdapter<GroupieViewHolder>()
-        recyclerView.adapter = adapter
-
-
         getUserDataFromFirebaseDatabase()
     }//onCreate
 
