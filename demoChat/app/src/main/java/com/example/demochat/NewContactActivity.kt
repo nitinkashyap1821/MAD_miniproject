@@ -1,10 +1,12 @@
 package com.example.demochat
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -28,6 +30,11 @@ class NewContactActivity : AppCompatActivity() {
         getUserDataFromFirebaseDatabase()
     }//onCreate
 
+    companion object{
+        const val USER_KEY_NAME = "USER_KEY_NAME"
+        const val USER_KEY_IMAGE = "USER_KEY_IMAGE"
+        const val USER_KEY_UID = "USER_KEY_UID"
+    }
     private fun getUserDataFromFirebaseDatabase() {
         val ref = FirebaseDatabase.getInstance().getReference("users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -35,9 +42,17 @@ class NewContactActivity : AppCompatActivity() {
                 val adapter = GroupAdapter<GroupieViewHolder>()
                 snapshot.children.forEach {
                     val user = it.getValue(UserClass::class.java)
-                    if (user != null) {
-                        adapter.add(UserItem(user))
-                    }
+                    if(user!!.uid == FirebaseAuth.getInstance().uid) return@forEach
+                    adapter.add(UserItem(user))
+                }
+                adapter.setOnItemClickListener { item, view ->
+                    val username = item as UserItem
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    intent.putExtra(USER_KEY_NAME,username.user.username)
+                    intent.putExtra(USER_KEY_IMAGE,username.user.profileImageUrl)
+                    intent.putExtra(USER_KEY_UID,username.user.uid)
+                    startActivity(intent)
+                    finish()
                 }
                 recyclerView.adapter = adapter
             }
@@ -50,7 +65,7 @@ class NewContactActivity : AppCompatActivity() {
     }
 }//NewMessageActivity
 
-class UserItem(private val user: UserClass) : Item<GroupieViewHolder>() {
+class UserItem(val user: UserClass) : Item<GroupieViewHolder>() {
 
     override fun getLayout() = R.layout.user_rows_new_contact
 
@@ -60,9 +75,5 @@ class UserItem(private val user: UserClass) : Item<GroupieViewHolder>() {
             viewHolder.itemView.findViewById<ImageView>(R.id.imageViewProfileImageRow)
         userName.text = user.username
         Picasso.get().load(user.profileImageUrl).into(userProfileImage)
-
-
     }//bind
-
-
-}//PeopleItem
+}//UserItem

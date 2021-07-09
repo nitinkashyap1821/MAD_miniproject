@@ -10,5 +10,7 @@
     <string name="insert_image">Insert Image</string>
     <string name="sign_out">Sign Out</string>
     <string name="dummy">dummy</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="send">Send</string>
 
 </resources>

@@ -69,7 +69,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performRegister() {
-        if (email.text.isNullOrEmpty() || password.text.isNullOrEmpty() || username.text.isNullOrEmpty()) {
+        if (email.text.isNullOrEmpty() || password.text.isNullOrEmpty() || username.text.isNullOrEmpty() || imageView.drawable == null) {
             Toast.makeText(this, "Fill the above details", Toast.LENGTH_SHORT).show()
             return
         }
