@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_from_row"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        app:civ_border_color="@color/purple_500"
+        app:civ_border_width="2dp"
         android:src="@drawable/profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +22,10 @@
         android:id="@+id/textView_from_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="5dp"
         android:padding="16dp"
-        android:text="TextViewedrftyghujinbhvgcfxedrfijnbhvgcfed5r6t7y8ijbhvgcfdrrr56t7y"
-        android:background="@drawable/rounded_textview_for_chat_log"
+        android:text="This ia a test"
+        android:background="@drawable/rounded_textview_for_chat_from_log"
         android:textColor="@color/white"
         android:maxWidth="250dp"
         android:textSize="16sp"

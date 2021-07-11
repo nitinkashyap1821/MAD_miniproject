@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -37,11 +38,19 @@ class RegisterActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageViewProfileImage)
 
 
+        val getImage = registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) {
+            imageView.setImageURI(it)
+            imageInsert.alpha = 0f
+        }
+
         imageInsert.setOnClickListener {
-            selectImage()
+            getImage.launch("image/*")
         }
 
         register.setOnClickListener {
+            
             performRegister()
         }
 
@@ -51,22 +60,22 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+//
+//    private fun selectImage() {
+//        val intent = Intent()
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        startActivityForResult(intent, 100)
+//    }
 
-    private fun selectImage() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, 100)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null && data.data != null) {
-            selectedPhotoUri = data.data
-            imageView.setImageURI(selectedPhotoUri)
-            imageInsert.alpha = 0f
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == 100 && resultCode == RESULT_OK && data != null && data.data != null) {
+//            selectedPhotoUri = data.data
+//            imageView.setImageURI(selectedPhotoUri)
+//            imageInsert.alpha = 0f
+//        }
+//    }
 
     private fun performRegister() {
         if (email.text.isNullOrEmpty() || password.text.isNullOrEmpty() || username.text.isNullOrEmpty() || imageView.drawable == null) {
@@ -115,20 +124,20 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user = User(uid, username.text.toString(), profileImageUrl)
+        val user = UserClass(uid, username.text.toString(), profileImageUrl)
 
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(tag, "uploaded to DB")
-                val intent = Intent(this,LatestMessageActivity::class.java)
+                val intent = Intent(this, LatestMessageActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Log.d(tag, "${it.message}")
             }
     }
 
 }
 
-class User(val uid: String, val username: String, val profileImageUrl: String)
+//class User(val uid: String, val username: String, val profileImageUrl: String)
