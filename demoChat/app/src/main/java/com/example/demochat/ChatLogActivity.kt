@@ -132,6 +132,5 @@ class ChatToItem(val text: String, private val user: Uri) : Item<GroupieViewHold
 
         textViewToRow.text = text
         Picasso.get().load(user).into(imageViewToRow)
-
     }//bind
 }//ChatToItem
