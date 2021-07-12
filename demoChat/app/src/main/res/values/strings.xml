@@ -12,5 +12,7 @@
     <string name="dummy">dummy</string>
     <string name="enter_message">Enter Message</string>
     <string name="send">Send</string>
+    <string name="latest_message">Latest Message</string>
+    <string name="new_mess">New Mess</string>
 
 </resources>

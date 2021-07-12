@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.demochat.model.ChatMessageClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -45,7 +46,9 @@ class ChatLogActivity : AppCompatActivity() {
     }//onCreate
 
     private fun listenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("messages")
+        val fromId = FirebaseAuth.getInstance().uid.toString()
+        val toId = intent.getStringExtra(NewContactActivity.USER_KEY_UID).toString()
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatMessage = snapshot.getValue(ChatMessageClass::class.java)
@@ -62,6 +65,8 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text.toString(), toUserImage))
                     }
                 }
+
+                recyclerViewChatLog.scrollToPosition(adapter.itemCount-1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -88,13 +93,29 @@ class ChatLogActivity : AppCompatActivity() {
         val message = editTextMessageArea.text.toString()
         val fromId = FirebaseAuth.getInstance().uid.toString()
         val toId = intent.getStringExtra(NewContactActivity.USER_KEY_UID).toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/messages").push()
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val toRef =
+            FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+        val latestMessageRefFrom =
+            FirebaseDatabase.getInstance().getReference("latest-message/$fromId/$toId")
+        val latestMessageRefTo =
+            FirebaseDatabase.getInstance().getReference("latest-message/$toId/$fromId")
+
         val chatMessage =
             ChatMessageClass(ref.key.toString(), message, fromId, toId, System.currentTimeMillis())
         ref.setValue(chatMessage)
             .addOnSuccessListener {
                 editTextMessageArea.text.clear()
+                recyclerViewChatLog.scrollToPosition(adapter.itemCount - 1)
             }
+        toRef.setValue(chatMessage)
+            .addOnSuccessListener {
+                recyclerViewChatLog.scrollToPosition(adapter.itemCount - 2)
+            }
+        latestMessageRefFrom.setValue(chatMessage)
+        latestMessageRefTo.setValue(chatMessage)
+
+
     }//sendMessage
 }//ChatLogActivity
 

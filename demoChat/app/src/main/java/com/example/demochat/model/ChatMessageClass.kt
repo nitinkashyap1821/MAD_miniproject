@@ -1,4 +1,4 @@
-package com.example.demochat
+package com.example.demochat.model
 
 class ChatMessageClass(
     val id: String? = null,

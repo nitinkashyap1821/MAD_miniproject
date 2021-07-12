@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.demochat.model.UserClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -25,9 +26,12 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri? = null
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        supportActionBar?.hide()
 
         username = findViewById(R.id.editTextUsername)
         email = findViewById(R.id.editTextTextEmailAddress)
@@ -41,8 +45,12 @@ class RegisterActivity : AppCompatActivity() {
         val getImage = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) {
+            selectedPhotoUri = it
             imageView.setImageURI(it)
-            imageInsert.alpha = 0f
+            if(selectedPhotoUri != null){
+                imageInsert.alpha = 0f
+            }
+
         }
 
         imageInsert.setOnClickListener {
@@ -50,7 +58,6 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         register.setOnClickListener {
-            
             performRegister()
         }
 
@@ -59,23 +66,6 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-//
-//    private fun selectImage() {
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = Intent.ACTION_GET_CONTENT
-//        startActivityForResult(intent, 100)
-//    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == 100 && resultCode == RESULT_OK && data != null && data.data != null) {
-//            selectedPhotoUri = data.data
-//            imageView.setImageURI(selectedPhotoUri)
-//            imageInsert.alpha = 0f
-//        }
-//    }
 
     private fun performRegister() {
         if (email.text.isNullOrEmpty() || password.text.isNullOrEmpty() || username.text.isNullOrEmpty() || imageView.drawable == null) {
@@ -129,6 +119,7 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(tag, "uploaded to DB")
+//                progressDialog.dismiss()
                 val intent = Intent(this, LatestMessageActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
