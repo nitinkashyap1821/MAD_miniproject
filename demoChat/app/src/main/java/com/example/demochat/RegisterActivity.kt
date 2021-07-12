@@ -1,5 +1,6 @@
 package com.example.demochat
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,9 +25,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private val tag: String = "RegisterActivity"
     private var selectedPhotoUri: Uri? = null
-
-
-
+    private lateinit var dialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +46,9 @@ class RegisterActivity : AppCompatActivity() {
         ) {
             selectedPhotoUri = it
             imageView.setImageURI(it)
-            if(selectedPhotoUri != null){
+            if (selectedPhotoUri != null) {
                 imageInsert.alpha = 0f
             }
-
         }
 
         imageInsert.setOnClickListener {
@@ -58,6 +56,9 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         register.setOnClickListener {
+            dialog = ProgressDialog(this)
+            dialog.setMessage("Registering User")
+            dialog.show()
             performRegister()
         }
 
@@ -65,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
         }
-    }
+    }//onCreate
 
     private fun performRegister() {
         if (email.text.isNullOrEmpty() || password.text.isNullOrEmpty() || username.text.isNullOrEmpty() || imageView.drawable == null) {
@@ -85,7 +86,7 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 Log.d(tag, "${it.message}")
             }
-    }
+    }//performRegister
 
     private fun uploadImageToFirebase() {
         if (selectedPhotoUri == null) return
@@ -102,13 +103,12 @@ class RegisterActivity : AppCompatActivity() {
                     .addOnSuccessListener {
                         saveUserToFirebaseDatabase(it.toString())
                     }
-
             }
             .addOnFailureListener {
                 Log.d(tag, "${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
-    }
+    }//uploadImageToFirebase
 
     private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
@@ -119,7 +119,7 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(tag, "uploaded to DB")
-//                progressDialog.dismiss()
+                dialog.dismiss()
                 val intent = Intent(this, LatestMessageActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
@@ -127,8 +127,7 @@ class RegisterActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Log.d(tag, "${it.message}")
             }
-    }
+    }//saveUserToFirebaseDatabase
 
-}
+}//RegisterActivity
 
-//class User(val uid: String, val username: String, val profileImageUrl: String)

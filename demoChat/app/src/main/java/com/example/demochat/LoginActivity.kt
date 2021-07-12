@@ -1,14 +1,14 @@
 package com.example.demochat
 
+import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.example.demochat.R
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -17,6 +17,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password: EditText
     private lateinit var logIn: Button
     private lateinit var backToRegister: TextView
+    private lateinit var dialog: ProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -27,13 +29,16 @@ class LoginActivity : AppCompatActivity() {
         logIn = findViewById(R.id.buttonLogin)
 
         logIn.setOnClickListener {
+            dialog = ProgressDialog(this)
+            dialog.setMessage("Logging")
+            dialog.show()
             performLogin()
         }
 
         backToRegister.setOnClickListener {
             finish()
         }
-    }
+    }//onCreate
 
     private fun performLogin() {
         if (email.text.isEmpty() || password.text.isEmpty()) {
@@ -44,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
             .signInWithEmailAndPassword(email.text.toString(), password.text.toString())
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
+                dialog.dismiss()
                 val intent = Intent(this, LatestMessageActivity::class.java)
                 startActivity(intent)
                 Log.d("Main", "uid = ${it.result?.user?.uid}")
@@ -52,6 +58,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 Log.d("Main", "uid = ${it.message}")
             }
-    }
+    }//performLogin
 
-}
+}//LoginActivity

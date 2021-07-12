@@ -31,11 +31,12 @@ class NewContactActivity : AppCompatActivity() {
         getUserDataFromFirebaseDatabase()
     }//onCreate
 
-    companion object{
+    companion object {
         const val USER_KEY_NAME = "USER_KEY_NAME"
         const val USER_KEY_IMAGE = "USER_KEY_IMAGE"
         const val USER_KEY_UID = "USER_KEY_UID"
     }
+
     private fun getUserDataFromFirebaseDatabase() {
         val ref = FirebaseDatabase.getInstance().getReference("users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -43,24 +44,22 @@ class NewContactActivity : AppCompatActivity() {
                 val adapter = GroupAdapter<GroupieViewHolder>()
                 snapshot.children.forEach {
                     val user = it.getValue(UserClass::class.java)
-                    if(user!!.uid == FirebaseAuth.getInstance().uid) return@forEach
+                    if (user!!.uid == FirebaseAuth.getInstance().uid) return@forEach
                     adapter.add(UserItem(user))
                 }
                 adapter.setOnItemClickListener { item, view ->
                     val username = item as UserItem
                     val intent = Intent(view.context, ChatLogActivity::class.java)
-                    intent.putExtra(USER_KEY_NAME,username.user.username)
-                    intent.putExtra(USER_KEY_IMAGE,username.user.profileImageUrl)
-                    intent.putExtra(USER_KEY_UID,username.user.uid)
+                    intent.putExtra(USER_KEY_NAME, username.user.username)
+                    intent.putExtra(USER_KEY_IMAGE, username.user.profileImageUrl)
+                    intent.putExtra(USER_KEY_UID, username.user.uid)
                     startActivity(intent)
                     finish()
                 }
                 recyclerView.adapter = adapter
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // not necessary
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
         })
     }

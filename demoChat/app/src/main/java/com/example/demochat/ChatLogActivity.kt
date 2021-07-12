@@ -66,27 +66,18 @@ class ChatLogActivity : AppCompatActivity() {
                     }
                 }
 
-                recyclerViewChatLog.scrollToPosition(adapter.itemCount-1)
+                recyclerViewChatLog.scrollToPosition(adapter.itemCount - 1)
             }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                //not necessary
-            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                //not necessary
-            }
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
 
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                //not necessary
-            }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
-            override fun onCancelled(error: DatabaseError) {
-                //not necessary
-            }
-
+            override fun onCancelled(error: DatabaseError) {}
         })
-    }
+    }//listenForMessages
 
     private fun sendMessage() {
 
@@ -114,8 +105,6 @@ class ChatLogActivity : AppCompatActivity() {
             }
         latestMessageRefFrom.setValue(chatMessage)
         latestMessageRefTo.setValue(chatMessage)
-
-
     }//sendMessage
 }//ChatLogActivity
 
@@ -129,7 +118,6 @@ class ChatFromItem(val text: String, private val user: Uri) : Item<GroupieViewHo
 
         textViewFromRow.text = text
         Picasso.get().load(user).into(imageViewFromRow)
-
     }//bind
 }//ChatFromItem
 

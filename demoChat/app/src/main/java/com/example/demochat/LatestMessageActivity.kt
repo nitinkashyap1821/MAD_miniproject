@@ -30,12 +30,12 @@ class LatestMessageActivity : AppCompatActivity() {
         supportActionBar?.title = "Latest Messages"
         recyclerView = findViewById(R.id.recyclerViewLatestMessages)
 
-
         recyclerView.adapter = adapter
 
         listenForLatestMessage()
 
         fetchCurrentUserData()
+
         verifyUser()
     }//onCreate
 
@@ -59,7 +59,6 @@ class LatestMessageActivity : AppCompatActivity() {
                 val chatMessage = snapshot.getValue(ChatMessageClass::class.java) ?: return
                 latestMessageMap[snapshot.key!!] = chatMessage
                 refresh()
-
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}
@@ -67,9 +66,7 @@ class LatestMessageActivity : AppCompatActivity() {
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
             override fun onCancelled(error: DatabaseError) {}
-
         })
-
     }//listenForLatestMessage
 
     private fun refresh() {
@@ -77,8 +74,7 @@ class LatestMessageActivity : AppCompatActivity() {
         latestMessageMap.values.forEach {
             adapter.add(LatestMessageDataInserter(it))
         }
-
-    }
+    }//refresh
 
 
     class LatestMessageDataInserter(val ChatMessage: ChatMessageClass) : Item<GroupieViewHolder>() {
@@ -93,11 +89,10 @@ class LatestMessageActivity : AppCompatActivity() {
 
             tvLatestMessage.text = ChatMessage.text
 
-            val chatPartner: String
-            if (ChatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                chatPartner = ChatMessage.toId.toString()
+            val chatPartner: String = if (ChatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                ChatMessage.toId.toString()
             } else {
-                chatPartner = ChatMessage.fromId.toString()
+                ChatMessage.fromId.toString()
             }
             val ref = FirebaseDatabase.getInstance().getReference("users/$chatPartner")
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -109,7 +104,6 @@ class LatestMessageActivity : AppCompatActivity() {
 
                 override fun onCancelled(error: DatabaseError) {}
             })
-
         }//bind
     }//UserItem
 
@@ -123,10 +117,7 @@ class LatestMessageActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {}
-
         })
-
-
     }//fetchCurrentUserData
 
     private fun verifyUser() {
@@ -143,7 +134,6 @@ class LatestMessageActivity : AppCompatActivity() {
             R.id.menuNewMessage -> {
                 val intent = Intent(this, NewContactActivity::class.java)
                 startActivity(intent)
-
             }
             R.id.menuSignOut -> {
                 FirebaseAuth.getInstance().signOut()
@@ -154,7 +144,7 @@ class LatestMessageActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
+    }//onOptionsItemSelected
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.homepage_navbar, menu)
