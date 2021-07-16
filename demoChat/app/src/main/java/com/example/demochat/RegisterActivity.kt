@@ -83,6 +83,7 @@ class RegisterActivity : AppCompatActivity() {
 
             }
             .addOnFailureListener {
+                dialog.dismiss()
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 Log.d(tag, "${it.message}")
             }
@@ -105,6 +106,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
             }
             .addOnFailureListener {
+                dialog.dismiss()
                 Log.d(tag, "${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
@@ -125,6 +127,8 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             .addOnFailureListener {
+                dialog.dismiss()
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 Log.d(tag, "${it.message}")
             }
     }//saveUserToFirebaseDatabase

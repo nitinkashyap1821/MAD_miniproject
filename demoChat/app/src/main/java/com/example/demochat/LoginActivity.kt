@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
 
         logIn.setOnClickListener {
             dialog = ProgressDialog(this)
-            dialog.setMessage("Logging")
+            dialog.setMessage("Logging In")
             dialog.show()
             performLogin()
         }
@@ -55,8 +55,8 @@ class LoginActivity : AppCompatActivity() {
                 Log.d("Main", "uid = ${it.result?.user?.uid}")
             }
             .addOnFailureListener {
+                dialog.dismiss()
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
-                Log.d("Main", "uid = ${it.message}")
             }
     }//performLogin
 
