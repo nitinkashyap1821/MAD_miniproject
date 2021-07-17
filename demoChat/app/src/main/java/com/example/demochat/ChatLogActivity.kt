@@ -101,7 +101,7 @@ class ChatLogActivity : AppCompatActivity() {
             }
         toRef.setValue(chatMessage)
             .addOnSuccessListener {
-                recyclerViewChatLog.scrollToPosition(adapter.itemCount - 2)
+                recyclerViewChatLog.scrollToPosition(adapter.itemCount - 1)
             }
         latestMessageRefFrom.setValue(chatMessage)
         latestMessageRefTo.setValue(chatMessage)

@@ -77,7 +77,6 @@ class RegisterActivity : AppCompatActivity() {
             .createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
-
                 Log.d(tag, "uid = ${it.result?.user?.uid}")
                 uploadImageToFirebase()
 
