@@ -25,7 +25,7 @@
         android:id="@+id/imageViewProfileImage"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        app:civ_border_color="@color/white"
+        app:civ_border_color="@color/purple_500"
         app:civ_border_width="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonInsertImage"
         app:layout_constraintEnd_toEndOf="@+id/buttonInsertImage"
