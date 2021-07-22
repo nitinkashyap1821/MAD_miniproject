@@ -42,6 +42,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //circular image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //image caching and downloading
@@ -50,7 +52,7 @@ dependencies {
     //Groupie, flexible library for complex RecyclerView layouts.
     implementation "com.xwray:groupie:2.9.0"
     implementation "com.xwray:groupie-kotlin-android-extensions:2.9.0"
-    implementation 'com.xwray:groupie-databinding:2.9.0'
+    //implementation 'com.xwray:groupie-databinding:2.9.0'
 
     //fireBase
     implementation platform('com.google.firebase:firebase-bom:28.2.0')

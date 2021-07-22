@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_700"
+    android:background="@color/white"
     tools:context="com.example.demochat.RegisterActivity">
 
 
@@ -108,7 +108,7 @@
         android:layout_marginBottom="50dp"
         android:padding="10dp"
         android:text="@string/already_have_an_account"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
