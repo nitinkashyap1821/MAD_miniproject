@@ -98,7 +98,6 @@ class RegisterActivity : AppCompatActivity() {
         refStorage.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 Log.d(tag, "image uploaded")
-
                 refStorage.downloadUrl
                     .addOnSuccessListener {
                         saveUserToFirebaseDatabase(it.toString())
